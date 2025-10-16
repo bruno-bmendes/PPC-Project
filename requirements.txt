@@ -1,0 +1,10 @@
+streamlit_extras
+streamlit==1.45.0
+pillow
+streamlit_plotly_events
+streamlit-js-eval
+streamlit_echarts
+numpy
+matplotlib
+scipy
+plotly
