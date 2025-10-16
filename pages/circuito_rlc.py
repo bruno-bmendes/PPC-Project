@@ -308,8 +308,14 @@ def circuito_rlc():
     """)
 
     st.markdown("""
-        **Subamortecido:** \nOcorre quando R² < 4L/C. A energia oscila entre o indutor e o capacitor, produzindo uma resposta com oscilações decrescentes até o equilíbrio.  
-        \n**Criticamente amortecido:** \nAcontece quando R² = 4L/C. O sistema atinge o valor final da forma mais rápida possível, sem oscilar — é a resposta mais estável e eficiente.\n**Superamortecido:** \nOcorre quando R² > 4L/C. O resistor domina o comportamento do circuito, que cresce lentamente e se aproxima do valor final sem ultrapassá-lo.  
+        **Subamortecido:** 
+        Ocorre quando R² < 4L/C. A energia oscila entre o indutor e o capacitor, produzindo uma resposta com oscilações decrescentes até o equilíbrio.
+
+        **Criticamente amortecido:** 
+        Acontece quando R² = 4L/C. O sistema atinge o valor final da forma mais rápida possível, sem oscilar — é a resposta mais estável e eficiente.
+
+        **Superamortecido:** 
+        Ocorre quando R² > 4L/C. O resistor domina o comportamento do circuito, que cresce lentamente e se aproxima do valor final sem ultrapassá-lo.  
     """)
 
     space_line()

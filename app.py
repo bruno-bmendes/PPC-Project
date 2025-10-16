@@ -13,7 +13,7 @@ from pages.circuito_rc import *
 from pages.circuito_rlc import *
 
 # Configurações da página
-st.set_page_config(page_title="Simulador PPC", initial_sidebar_state="collapsed", layout="wide")
+st.set_page_config(page_title="Simulador PPC", initial_sidebar_state="collapsed", layout="wide", page_icon="💡")
 
 # Cor de Background
 st.markdown("""
