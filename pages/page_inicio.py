@@ -81,3 +81,14 @@ def page_inicio():
 
     # Renderiza o container com a mensagem
     st.markdown("<div class='custom-container'>SELECIONE UM CENÁRIO PARA INICIAR O SIMULADOR</div>", unsafe_allow_html=True)
+
+    st.markdown(
+        """
+        <div style='text-align: center; font-size: 18px;'>
+            Visite o repositório no 
+            <a href='https://github.com/bruno-bmendes/PPC-Project' target='_blank'>GitHub</a>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
