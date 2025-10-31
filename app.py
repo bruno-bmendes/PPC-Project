@@ -11,6 +11,7 @@ from pages.page_inicio import *
 from pages.vaso_pulmao import *
 from pages.circuito_rc import *
 from pages.circuito_rlc import *
+from pages.sistema_massa_mola import *
 
 # Configurações da página
 st.set_page_config(page_title="Simulador PPC", initial_sidebar_state="collapsed", layout="wide", page_icon="💡")
@@ -39,7 +40,7 @@ if "page" not in ss:
         ss.title = "Simulador PPC"
 
     if "page_set" not in ss:
-        ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC"]
+        ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC", "Sistema Massa Mola"]
 
     ss.page = "inicio"
     st.rerun()
@@ -56,3 +57,6 @@ elif ss.page == "circuito_rc":
 
 elif ss.page == "circuito_rlc":
     circuito_rlc()
+
+elif ss.page == "sistema_massa_mola":
+    sistema_massa_mola()

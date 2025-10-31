@@ -18,7 +18,7 @@ if "page" not in ss:
         ss.title = "Simulador PPC"
 
     if "page_set" not in ss:
-        ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC"]
+        ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC", "Sistema Massa Mola"]
 
     ss.page = "circuito_rc"
     st.rerun()

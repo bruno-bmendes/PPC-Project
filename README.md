@@ -11,3 +11,6 @@ O objetivo é **visualizar o comportamento dinâmico de sistemas físicos cláss
 - Ajuste dinâmico de parâmetros via *sliders*;
 - Visualização gráfica em tempo real;
 - Interface responsiva e intuitiva em **Streamlit**.
+
+### Acesse o App pelo link:
+https://ppc-project-bruno-mendes.streamlit.app/
