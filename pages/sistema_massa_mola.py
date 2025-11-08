@@ -30,15 +30,15 @@ def sistema_massa_mola():
     if "mm_m" not in ss:
         ss.mm_m = 1.0
     if "mm_k" not in ss:
-        ss.mm_k = 20.0
+        ss.mm_k = 10.0
     if "mm_c" not in ss:
-        ss.mm_c = 2.0
+        ss.mm_c = 3.0
     if "mm_z0" not in ss:
-        ss.mm_z0 = 1.0
+        ss.mm_z0 = 0.1
     if "mm_zdot0" not in ss:
         ss.mm_zdot0 = 0.0
     if "mm_tmax" not in ss:
-        ss.mm_tmax = 10.0
+        ss.mm_tmax = 50.0
 
     # Definir Título
     ss.title = "Sistema Massa Mola"
@@ -281,7 +281,7 @@ def sistema_massa_mola():
             with st.container(border=True):
                 st.markdown(f"k = {ss.mm_k:.2f} N/m")
                 k = st.slider(
-                    "", 10.0, 100.0, ss.mm_k, step=5.0
+                    "", 1.0, 100.0, ss.mm_k, step=1.0
                 )
                 if k != ss.mm_k:
                     ss.mm_k = k
@@ -317,7 +317,7 @@ def sistema_massa_mola():
             with st.container(border=True):
                 st.markdown(f"z0 = {ss.mm_z0:.2f} m")
                 z0 = st.slider(
-                    "", 1.0, 20.0, ss.mm_z0, step=0.5
+                    "", 0.1, 20.0, ss.mm_z0, step=0.1
                 )
                 if z0 != ss.mm_z0:
                     ss.mm_z0 = z0
