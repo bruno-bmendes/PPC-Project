@@ -84,7 +84,7 @@ def circuito_rlc():
         st.latex(r"\varepsilon = V_r + V_c + V_L")
 
         st.markdown("""
-            Sabendo que os valores das tensões do Resistor, Capacitor e Indutor são respectivamente:
+            Sabendo que os valores das tensões do Capacitor, Resistor e Indutor são respectivamente:
         """)
 
         st.latex(r"V_C = \frac{q}{C}, \quad V_R = Ri, \quad V_L = L \frac{di}{dt}")
