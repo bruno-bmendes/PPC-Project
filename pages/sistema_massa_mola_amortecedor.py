@@ -18,13 +18,13 @@ if "page" not in ss:
         ss.title = "Simulador PPC"
 
     if "page_set" not in ss:
-        ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC", "Sistema Massa Mola"]
+        ss.page_set = ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC", "Sistema Massa Mola Amortecedor", "Pêndulo Simples Amortecido", "Sistema Eletromecanico"]
 
-    ss.page = "sistema_massa_mola"
+    ss.page = "sistema_massa_mola_amortecedor"
     st.rerun()
 
 # Definindo página
-def sistema_massa_mola():
+def sistema_massa_mola_amortecedor():
 
     # Declarando Variáveis
     if "mm_m" not in ss:
@@ -41,7 +41,7 @@ def sistema_massa_mola():
         ss.mm_tmax = 50.0
 
     # Definir Título
-    ss.title = "Sistema Massa Mola"
+    ss.title = "Sistema Massa Mola Amortecedor"
     
     # Cabeçalho
     col1, col2, col3 = st.columns([13, 1, 4])
@@ -70,6 +70,26 @@ def sistema_massa_mola():
     # Botão de Info
     @st.dialog("Desenvolvendo a Equação")
     def info():
+
+        st.markdown("""
+            Podemos declarar inicialmente as seguintes premissas:
+
+                - Sistema linear, obedecendo à Lei de Hooke (força elástica proporcional ao deslocamento).
+
+                - O amortecedor é viscoso linear, com força proporcional à velocidade.
+
+                - O movimento ocorre em apenas uma direção (1 grau de liberdade).
+
+                - A massa é concentrada em um ponto, rigidamente conectada à mola e ao amortecedor.
+
+                - Não há forças externas atuando, analisando-se a resposta natural do sistema.
+
+                - As condições iniciais de deslocamento e velocidade são conhecidas.
+
+                - Os parâmetros m, c e k são constantes e positivos.
+
+                - As oscilações são pequenas, mantendo a linearidade geométrica.
+        """)
 
         st.markdown("""
             Considerando a Lei de Newton da Conservação do Movimento:
@@ -148,7 +168,7 @@ def sistema_massa_mola():
     def code():
 
         st.code("""
-            # Cálculo de parâmetros derivados
+            # Cálculo de parâmetros derivados 
             wn = np.sqrt(ss.mm_k/ss.mm_m)               # frequência natural não amortecida (rad/s)
             zeta = ss.mm_c / (2*np.sqrt(ss.mm_k*ss.mm_m))     # fator de amortecimento (adimensional)
             wd = wn * np.sqrt(1 - zeta**2) if zeta < 1 else 0   # frequência amortecida (rad/s)
@@ -175,30 +195,56 @@ def sistema_massa_mola():
                 A1 = (ss.mm_zdot0 - s2*ss.mm_z0)/(s1 - s2)           # constante (m)
                 A2 = ss.mm_z0 - A1                             # constante (m)
                 z = A1*np.exp(s1*t) + A2*np.exp(s2*t)    # posição (m)
-            # Criação do gráfico
-            fig = go.Figure()
 
-            fig.add_trace(go.Scatter(
-                x=t, 
-                y=z, 
-                mode='lines',
-                name=f'ζ = {zeta:.2f}',
-                line=dict(width=2)
-            ))
+            # Derivada numérica para velocidade
+            zdot = np.gradient(z, t)
 
-            # Layout do gráfico
-            fig.update_layout(
-                title='Resposta temporal z(t) - Sistema massa-mola-amortecedor',
-                xaxis_title='Tempo (s)',
-                yaxis_title='Posição z(t) (m)',
-                template='plotly_white',
-                width=800,
-                height=400,
-                legend=dict(x=0.8, y=1.1)
-            )
+            # Criação dos gráficos em duas colunas
+            col1, col2 = st.columns(2)
 
-            # Exibição no Streamlit
-            st.plotly_chart(fig, use_container_width=True)
+            with col1:
+                fig_z = go.Figure()
+                fig_z.add_trace(go.Scatter(
+                    x=t, 
+                    y=z, 
+                    mode='lines',
+                    name=f'ζ = {zeta:.2f}',
+                    line=dict(width=2)
+                ))
+
+                fig_z.update_layout(
+                    title='Deslocamento z(t)',
+                    xaxis_title='Tempo (s)',
+                    yaxis_title='Posição (m)',
+                    template='plotly_white',
+                    width=600,
+                    height=400,
+                    legend=dict(x=0.8, y=1.1)
+                )
+
+                st.plotly_chart(fig_z, use_container_width=True)
+
+            with col2:
+                fig_v = go.Figure()
+                fig_v.add_trace(go.Scatter(
+                    x=t,
+                    y=zdot,
+                    mode='lines',
+                    name=f'ζ = {zeta:.2f}',
+                    line=dict(width=2, dash='dot')
+                ))
+
+                fig_v.update_layout(
+                    title="Velocidade z'(t)",
+                    xaxis_title='Tempo (s)',
+                    yaxis_title='Velocidade (m/s)',
+                    template='plotly_white',
+                    width=600,
+                    height=400,
+                    legend=dict(x=0.8, y=1.1)
+                )
+
+                st.plotly_chart(fig_v, use_container_width=True)
         """)
 
     # Layout principal
@@ -208,7 +254,7 @@ def sistema_massa_mola():
         if st.button("</>"):
             code()
 
-    # Cálculo de parâmetros derivados
+    # Cálculo de parâmetros derivados 
     wn = np.sqrt(ss.mm_k/ss.mm_m)               # frequência natural não amortecida (rad/s)
     zeta = ss.mm_c / (2*np.sqrt(ss.mm_k*ss.mm_m))     # fator de amortecimento (adimensional)
     wd = wn * np.sqrt(1 - zeta**2) if zeta < 1 else 0   # frequência amortecida (rad/s)
@@ -235,30 +281,56 @@ def sistema_massa_mola():
         A1 = (ss.mm_zdot0 - s2*ss.mm_z0)/(s1 - s2)           # constante (m)
         A2 = ss.mm_z0 - A1                             # constante (m)
         z = A1*np.exp(s1*t) + A2*np.exp(s2*t)    # posição (m)
-    # Criação do gráfico
-    fig = go.Figure()
 
-    fig.add_trace(go.Scatter(
-        x=t, 
-        y=z, 
-        mode='lines',
-        name=f'ζ = {zeta:.2f}',
-        line=dict(width=2)
-    ))
+    # Derivada numérica para velocidade
+    zdot = np.gradient(z, t)
 
-    # Layout do gráfico
-    fig.update_layout(
-        title='Resposta temporal z(t) - Sistema massa-mola-amortecedor',
-        xaxis_title='Tempo (s)',
-        yaxis_title='Posição z(t) (m)',
-        template='plotly_white',
-        width=800,
-        height=400,
-        legend=dict(x=0.8, y=1.1)
-    )
+    # Criação dos gráficos em duas colunas
+    col1, col2 = st.columns(2)
 
-    # Exibição no Streamlit
-    st.plotly_chart(fig, use_container_width=True)
+    with col1:
+        fig_z = go.Figure()
+        fig_z.add_trace(go.Scatter(
+            x=t, 
+            y=z, 
+            mode='lines',
+            name=f'ζ = {zeta:.2f}',
+            line=dict(width=2)
+        ))
+
+        fig_z.update_layout(
+            title='Deslocamento z(t)',
+            xaxis_title='Tempo (s)',
+            yaxis_title='Posição (m)',
+            template='plotly_white',
+            width=600,
+            height=400,
+            legend=dict(x=0.8, y=1.1)
+        )
+
+        st.plotly_chart(fig_z, use_container_width=True)
+
+    with col2:
+        fig_v = go.Figure()
+        fig_v.add_trace(go.Scatter(
+            x=t,
+            y=zdot,
+            mode='lines',
+            name=f'ζ = {zeta:.2f}',
+            line=dict(width=2, dash='dot')
+        ))
+
+        fig_v.update_layout(
+            title="Velocidade z'(t)",
+            xaxis_title='Tempo (s)',
+            yaxis_title='Velocidade (m/s)',
+            template='plotly_white',
+            width=600,
+            height=400,
+            legend=dict(x=0.8, y=1.1)
+        )
+
+        st.plotly_chart(fig_v, use_container_width=True)
 
     col1, col2 = st.columns([1, 1])
     with col1:

@@ -19,7 +19,7 @@ if "page" not in ss:
         ss.title = "Simulador PPC"
 
     if "page_set" not in ss:
-        ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC", "Sistema Massa Mola"]
+        ss.page_set = ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC", "Sistema Massa Mola Amortecedor", "Pêndulo Simples Amortecido", "Sistema Eletromecanico"]
 
     ss.page = "vaso_pulmao"
     st.rerun()
@@ -47,7 +47,7 @@ def vaso_pulmao():
     if "vp_r" not in ss:
         ss.vp_r = 8.314
     if "vp_t_final" not in ss:
-        ss.vp_t_final = 200
+        ss.vp_t_final = 8
 
     # Definir Título
     ss.title = "Sistema Vaso Pulmão"
@@ -225,7 +225,7 @@ def vaso_pulmao():
 
     # Definindo tempo de simulação
     t_span = (0, ss.vp_t_final)
-    t_eval = np.linspace(t_span[0], t_span[1], 200)
+    t_eval = np.linspace(t_span[0], t_span[1], 10000)
 
     # Resolvendo Equação Diferencial
     sol = solve_ivp(dP_dt, t_span, [ss.vp_p0], t_eval=t_eval)

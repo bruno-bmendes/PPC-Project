@@ -11,7 +11,9 @@ from pages.page_inicio import *
 from pages.vaso_pulmao import *
 from pages.circuito_rc import *
 from pages.circuito_rlc import *
-from pages.sistema_massa_mola import *
+from pages.sistema_massa_mola_amortecedor import *
+from pages.pendulo_simples_amortecido import *
+from pages.sistema_eletromecanico import *
 
 # Configurações da página
 st.set_page_config(page_title="Simulador PPC", initial_sidebar_state="collapsed", layout="wide", page_icon="💡")
@@ -40,7 +42,7 @@ if "page" not in ss:
         ss.title = "Simulador PPC"
 
     if "page_set" not in ss:
-        ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC", "Sistema Massa Mola"]
+        ss.page_set = ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC", "Sistema Massa Mola Amortecedor", "Pêndulo Simples Amortecido", "Sistema Eletromecanico"]
 
     ss.page = "inicio"
     st.rerun()
@@ -58,5 +60,11 @@ elif ss.page == "circuito_rc":
 elif ss.page == "circuito_rlc":
     circuito_rlc()
 
-elif ss.page == "sistema_massa_mola":
-    sistema_massa_mola()
+elif ss.page == "sistema_massa_mola_amortecedor":
+    sistema_massa_mola_amortecedor()
+
+elif ss.page == "pendulo_simples_amortecido":
+    pendulo_simples_amortecido()
+
+elif ss.page == "sistema_eletromecanico":
+    sistema_eletromecanico()
