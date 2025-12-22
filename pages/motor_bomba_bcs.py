@@ -384,7 +384,91 @@ def motor_bomba_de_um_poco_bcs():
     def code():
 
         st.code("""
-                   
+            t_eval = np.linspace(0.0, ss.bcs_tmax, 2000)
+
+            seed = 42 
+
+            t_E = np.arange(0.0, ss.bcs_tmax + ss.bcs_dt_E, ss.bcs_dt_E)
+            rng = np.random.default_rng(seed)
+            E_vals = rng.uniform(ss.bcs_E_min, ss.bcs_E_max, size=len(t_E))
+
+            def E_of_t(t):
+                # sinal em degraus: pega o último valor sorteado antes de t
+                idx = np.searchsorted(t_E, t, side="right") - 1
+                idx = np.clip(idx, 0, len(E_vals) - 1)
+                return E_vals[idx]
+
+            def motor_termo_odes(t, y):
+                w, i, T = y
+
+                R_T = ss.bcs_R0 * (1.0 + ss.bcs_alpha * (T - ss.bcs_T_inf))           # R(T)
+                dw_dt = (ss.bcs_k1 * i - ss.bcs_b * w) / ss.bcs_J                   # J*w_dot = k1*i - b*w
+
+                E_t = E_of_t(t)                                # <<< agora E varia no tempo
+                di_dt = (E_t - R_T * i - ss.bcs_k2 * w) / ss.bcs_L           # L*i_dot = E(t) - R(T)*i - k2*w
+
+                dT_dt = (i**2 * R_T - ss.bcs_hA * (T - ss.bcs_T_inf)) / ss.bcs_Ct   # Ct*T_dot = i^2*R(T) - hA(T-Tinf)
+
+                return [dw_dt, di_dt, dT_dt]
+            
+            T_init = ss.bcs_T_inf
+
+            sol = solve_ivp(
+                motor_termo_odes,
+                (0.0, ss.bcs_tmax),
+                [ss.bcs_w0, ss.bcs_i0, T_init],
+                t_eval=t_eval,
+                method="RK45",
+                rtol=1e-8,
+                atol=1e-10
+            )
+
+            t = sol.t
+            w = sol.y[0]
+            i = sol.y[1]
+            T = sol.y[2]
+
+            # (Opcional) reconstruir E(t) no mesmo grid do gráfico
+            E_plot = np.array([E_of_t(tt) for tt in t])
+
+            col1, col2 = st.columns([1, 1])
+            with col1:
+                # 1) ω(t)
+                fig1, ax1 = plt.subplots()
+                ax1.plot(t, w)
+                ax1.set_xlabel("Tempo [s]")
+                ax1.set_ylabel("Velocidade angular ω [rad/s]")
+                ax1.set_title("EDO mecânica: ω(t)")
+                ax1.grid(True)
+                st.pyplot(fig1, clear_figure=True)
+
+                # 2) i(t)
+                fig2, ax2 = plt.subplots()
+                ax2.plot(t, i)
+                ax2.set_xlabel("Tempo [s]")
+                ax2.set_ylabel("Corrente i [A]")
+                ax2.set_title("EDO elétrica: i(t)")
+                ax2.grid(True)
+                st.pyplot(fig2, clear_figure=True)
+
+            with col2:
+                # 3) T(t)
+                fig3, ax3 = plt.subplots()
+                ax3.plot(t, T)
+                ax3.set_xlabel("Tempo [s]")
+                ax3.set_ylabel("Temperatura T [K]")
+                ax3.set_title("EDO térmica: T(t)")
+                ax3.grid(True)
+                st.pyplot(fig3, clear_figure=True)
+
+                # 4) E(t) (entrada em degraus)
+                fig4, ax4 = plt.subplots()
+                ax4.step(t, E_plot, where="post")
+                ax4.set_xlabel("Tempo [s]")
+                ax4.set_ylabel("Tensão E(t) [V]")
+                ax4.set_title("Entrada aleatória: E(t)")
+                ax4.grid(True)
+                st.pyplot(fig4, clear_figure=True)
         """)
 
     # Layout principal
