@@ -36,7 +36,7 @@ def pendulo_simples_amortecido():
     if "ps_omega0" not in ss:
         ss.ps_omega0 = 0.0
     if "ps_tmax" not in ss:
-        ss.ps_tmax = 50.0
+        ss.ps_tmax = 10.0
 
     # Definir Título
     ss.title = "Pêndulo Simples Amortecido (Linear e Não Linear)"
@@ -66,7 +66,7 @@ def pendulo_simples_amortecido():
     space_line()
     
     # Botão de Info
-    @st.dialog("Desenvolvendo a Equação")
+    @st.dialog("Desenvolvendo a Equação", width="large")
     def info():
 
         st.markdown("""
@@ -431,7 +431,7 @@ def pendulo_simples_amortecido():
             code()
 
     # Intervalo de simulação
-    t_span = (0, 10)
+    t_span = (0, ss.ps_tmax)
     t_eval = np.linspace(t_span[0], t_span[1], 2000)
 
     def pendulo_nao_linear(t, y):
@@ -524,7 +524,6 @@ def pendulo_simples_amortecido():
                 st.markdown(f"L = {ss.ps_l:.2f} m")
                 l = st.number_input(
                     "",
-                    #value=ss.ps_l,
                     label_visibility="hidden",
                     min_value=0.0,
                     key="ps_l"
@@ -538,7 +537,6 @@ def pendulo_simples_amortecido():
                 st.markdown(f"θ₀ = {ss.ps_theta0:.2f} rad")
                 theta0 = st.number_input(
                     "",
-                    #value=ss.ps_theta0,
                     label_visibility="hidden",
                     min_value=0.0,
                     key="ps_theta0"
@@ -555,7 +553,6 @@ def pendulo_simples_amortecido():
                 st.markdown(f"ω₀ = {ss.ps_omega0:.2f} rad/s")
                 omega0 = st.number_input(
                     "",
-                    #value=ss.ps_omega0,
                     label_visibility="hidden",
                     min_value=0.0,
                     key="ps_omega0"
@@ -569,12 +566,11 @@ def pendulo_simples_amortecido():
                 st.markdown(f"t_max = {ss.ps_tmax:.2f} s")
                 tmax = st.number_input(
                     "",
-                    #value=float(ss.ps_tmax),
                     label_visibility="hidden",
                     min_value=0.0,
                     key="ps_tmax"
                 )
-                if float(tmax) != ss.ps_tmax:
+                if tmax != ss.ps_tmax:
                     ss.ps_tmax = tmax
                     st.rerun()
 

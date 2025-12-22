@@ -273,51 +273,69 @@ def circuito_rc():
 
     with col2:
         col3, col4 = st.columns([1, 1])
+
         with col3:
             # Fonte
             with st.container(border=True):
+                st.markdown("Fonte de tensão")
                 st.markdown(f"E = {ss.rc_e:.2f} V")
-                e = st.slider(
-                    "", 1.0, 50.0, ss.rc_e, step=1.0, key="sl_rc_e"
+                rc_e = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="rc_e"
                 )
-                if e != ss.rc_e:
-                    ss.rc_e = e
+                if rc_e != ss.rc_e:
+                    ss.rc_e = rc_e
                     st.rerun()
 
             # Resistor
             with st.container(border=True):
+                st.markdown("Resistência elétrica")
                 st.markdown(f"R = {ss.rc_r:.2f} Ω")
-                r = st.slider(
-                    "", 100.0, 10000.0, ss.rc_r, step=10.0, key="sl_rc_r"
+                rc_r = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="rc_r"
                 )
-                if r != ss.rc_r:
-                    ss.rc_r = r
+                if rc_r != ss.rc_r:
+                    ss.rc_r = rc_r
                     st.rerun()
 
         with col4:
             # Capacitor
             with st.container(border=True):
-                st.markdown(f"C = {(ss.rc_c / 10e-6):.2f} * 10⁻⁶ F")
-                temp_c = ss.rc_c / 10e-6
-                def change_c():
-                    ss.rcl_c = c * 10e-6
-                c = st.slider(
-                    "", 10, 1000, 100, step=10, key="sl_rc_c", on_change=change_c
+                st.markdown("Capacitância")
+                st.markdown(f"C = {(ss.rc_c):.7f} F")
+                rc_c_micro = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    step=1e-6,
+                    min_value=0.0,
+                    key="rc_c"
                 )
-                if (c * 10e-6) != ss.rc_c:
-                    ss.rc_c = c * 10e-6
+                if rc_c_micro != (ss.rc_c):
+                    ss.rc_c = rc_c_micro
                     st.rerun()
 
+            # Tempo máximo
             with st.container(border=True):
+                st.markdown("Tempo final de simulação")
                 st.markdown(f"t = {ss.rc_tmax:.2f} s")
-                tmax = st.slider(
-                    "", 1.0, 200.0, float(ss.rc_tmax), step=1.0, key="sl_rc_tmax"
+                rc_tmax = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="rc_tmax"
                 )
-                if tmax != ss.rc_tmax:
-                    ss.rc_tmax = tmax
+                if rc_tmax != ss.rc_tmax:
+                    ss.rc_tmax = rc_tmax
                     st.rerun()
 
+            # Constante de tempo (somente leitura)
             with st.container(border=True):
+                st.markdown("Constante de tempo do circuito")
                 st.markdown(f"τ = {tau:.2f} s")
 
     # Linha divisória

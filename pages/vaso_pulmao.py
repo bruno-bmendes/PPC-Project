@@ -280,90 +280,142 @@ def vaso_pulmao():
 
     with col2:
         col3, col4 = st.columns([1, 1])
+
         with col3:
             # Volume
             with st.container(border=True):
+                st.markdown("Volume do vaso")
                 st.markdown(f"V = {ss.vp_v:.2f} m³")
-                v = st.slider(
-                    "", 0.1, 10.0, 1.0, step=0.1, key="sl_vp_v"
+                vp_v = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="vp_v"
                 )
-                if v != ss.vp_v:
-                    ss.vp_v = v
+                if vp_v != ss.vp_v:
+                    ss.vp_v = vp_v
                     st.rerun()
 
             # Massa Molar
             with st.container(border=True):
-                st.markdown(f"MM = {ss.vp_mm:.2f} kg/mol")
-                mm = st.slider(
-                    "", 0.001, 1.0, 0.029, step=0.001, key="sl_vp_mm"
+                st.markdown("Massa molar do gás")
+                st.markdown(f"MM = {ss.vp_mm:.4f} kg/mol")
+                vp_mm = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="vp_mm"
                 )
-                if mm != ss.vp_mm:
-                    ss.vp_mm = mm
+                if vp_mm != ss.vp_mm:
+                    ss.vp_mm = vp_mm
                     st.rerun()
 
             # Constante R
             with st.container(border=True):
+                st.markdown("Constante universal dos gases")
                 st.markdown(f"R = {ss.vp_r:.2f} J/(mol*K)")
 
             # Temperatura
             with st.container(border=True):
+                st.markdown("Temperatura do gás")
                 st.markdown(f"T = {ss.vp_t:.2f} K")
-                t = st.slider(
-                    "", 1.0, 600.0, 300.0, step=1.0, key="sl_vp_t"
+                vp_t = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="vp_t"
                 )
-                if t != ss.vp_t:
-                    ss.vp_t = t
+                if vp_t != ss.vp_t:
+                    ss.vp_t = vp_t
                     st.rerun()
 
             # Pressão Inicial
             with st.container(border=True):
-                st.markdown(f"P0 = {(ss.vp_p0/1e5):.2f} bar")
-                p0 = st.slider(
-                    "", 0.1, 10.0, 2.0, step=0.1, key="sl_vp_p0"
+                st.markdown("Pressão inicial")
+                st.markdown(f"P0 = {(ss.vp_p0):.2f} bar")
+                vp_p0_bar = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    step=1e5,
+                    min_value=0.0,
+                    key="vp_p0"
                 )
-                if p0 != (ss.vp_p0 / 1e5):
-                    ss.vp_p0 = p0 * 1e5
+                if vp_p0_bar != (ss.vp_p0):
+                    ss.vp_p0 = vp_p0_bar
                     st.rerun()
 
         with col4:
             # Constante de Material k1
             with st.container(border=True):
-                st.markdown(f"k1 = {ss.vp_k1:.2f}")
-                k1 = st.slider(
-                    "", 0.1, 3.0, 0.5, step=0.1, key="sl_vp_k1"
+                st.markdown("Constante k1")
+                st.markdown(f"k1 = {ss.vp_k1:.4f}")
+                vp_k1 = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="vp_k1"
                 )
-                if k1 != ss.vp_k1:
-                    ss.vp_k1 = k1
+                if vp_k1 != ss.vp_k1:
+                    ss.vp_k1 = vp_k1
                     st.rerun()
-                    
+
             # Constante de Material k2
             with st.container(border=True):
-                st.markdown(f"k2 = {ss.vp_k2:.2f}")
-                k2 = st.slider(
-                    "", 0.1, 3.0, 0.4, step=0.1, key="sl_vp_k2"
+                st.markdown("Constante k2")
+                st.markdown(f"k2 = {ss.vp_k2:.4f}")
+                vp_k2 = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="vp_k2"
                 )
-                if k2 != ss.vp_k2:
-                    ss.vp_k2 = k2
+                if vp_k2 != ss.vp_k2:
+                    ss.vp_k2 = vp_k2
                     st.rerun()
 
             # Pressão 1
             with st.container(border=True):
-                st.markdown(f"P1 = {(ss.vp_p1/1e5):.2f} bar")
-                p1 = st.slider(
-                    "", 0.1, 10.0, 5.0, step=0.1, key="sl_vp_p1"
+                st.markdown("Pressão de entrada")
+                st.markdown(f"P1 = {(ss.vp_p1):.2f} bar")
+                vp_p1_bar = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    step=1e5,
+                    min_value=0.0,
+                    key="vp_p1"
                 )
-                if p1 != (ss.vp_p1 / 1e5):
-                    ss.vp_p1 = p1 * 1e5
+                if vp_p1_bar != (ss.vp_p1):
+                    ss.vp_p1 = vp_p1_bar
                     st.rerun()
 
             # Pressão 2
             with st.container(border=True):
-                st.markdown(f"P2 = {(ss.vp_p2/1e5):.2f} bar")
-                p2 = st.slider(
-                    "", 0.1, 10.0, 1.0, step=0.1, key="sl_vp_p2"
+                st.markdown("Pressão de saída")
+                st.markdown(f"P2 = {(ss.vp_p2):.2f} bar")
+                vp_p2_bar = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    step=1e5,
+                    key="vp_p2"
                 )
-                if p2 != (ss.vp_p2 / 1e5):
-                    ss.vp_p2 = p2 * 1e5
+                if vp_p2_bar != (ss.vp_p2):
+                    ss.vp_p2 = vp_p2_bar
+                    st.rerun()
+
+            # Tempo final de simulação
+            with st.container(border=True):
+                st.markdown("Tempo final de simulação")
+                st.markdown(f"t_final = {ss.vp_t_final:.2f} s")
+                vp_t_final = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="vp_t_final",
+                    step=1.0
+                )
+                if vp_t_final != ss.vp_t_final:
+                    ss.vp_t_final = vp_t_final
                     st.rerun()
 
     # Linha divisória

@@ -338,71 +338,96 @@ def sistema_massa_mola_amortecedor():
 
     with col2:
         col3, col4 = st.columns([1, 1])
+
         with col3:
             # Massa
             with st.container(border=True):
+                st.markdown("Massa do sistema")
                 st.markdown(f"m = {ss.mm_m:.2f} kg")
-                m = st.slider(
-                    "", 0.5, 50.0, ss.mm_m, step=0.5
+                mm_m = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="mm_m"
                 )
-                if m != ss.mm_m:
-                    ss.mm_m = m
+                if mm_m != ss.mm_m:
+                    ss.mm_m = mm_m
                     st.rerun()
 
-            # Constante da Mola
+            # Constante da mola
             with st.container(border=True):
+                st.markdown("Constante da mola")
                 st.markdown(f"k = {ss.mm_k:.2f} N/m")
-                k = st.slider(
-                    "", 1.0, 100.0, ss.mm_k, step=1.0
+                mm_k = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="mm_k"
                 )
-                if k != ss.mm_k:
-                    ss.mm_k = k
+                if mm_k != ss.mm_k:
+                    ss.mm_k = mm_k
                     st.rerun()
 
-            # Velocidade Inicial
+            # Velocidade inicial
             with st.container(border=True):
-                st.markdown(f"v0 = {ss.mm_zdot0:.2f} m")
-                zdot0 = st.slider(
-                    "", 0.0, 20.0, ss.mm_zdot0, step=0.5
+                st.markdown("Velocidade inicial")
+                st.markdown(f"v0 = {ss.mm_zdot0:.2f} m/s")
+                mm_zdot0 = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    key="mm_zdot0"
                 )
-                if zdot0 != ss.mm_zdot0:
-                    ss.mm_zdot0 = zdot0
+                if mm_zdot0 != ss.mm_zdot0:
+                    ss.mm_zdot0 = mm_zdot0
                     st.rerun()
 
+            # Parâmetros derivados (somente leitura)
             with st.container(border=True):
-                st.markdown(f"ωn​ = {wn:.2f} rad/s")
+                st.markdown("Parâmetros dinâmicos")
+                st.markdown(f"ωn = {wn:.2f} rad/s")
                 st.markdown(f"ζ = {zeta:.2f}")
                 st.markdown(f"ωd = {wd:.2f} rad/s")
 
         with col4:
-            # Constante da Mola
+            # Amortecimento
             with st.container(border=True):
+                st.markdown("Coeficiente de amortecimento")
                 st.markdown(f"c = {ss.mm_c:.2f} N·s/m")
-                c = st.slider(
-                    "", 1.0, 20.0, ss.mm_c, step=0.5
+                mm_c = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="mm_c"
                 )
-                if c != ss.mm_c:
-                    ss.mm_c = c
+                if mm_c != ss.mm_c:
+                    ss.mm_c = mm_c
                     st.rerun()
 
-            # Posição Inicial
+            # Posição inicial
             with st.container(border=True):
+                st.markdown("Posição inicial")
                 st.markdown(f"z0 = {ss.mm_z0:.2f} m")
-                z0 = st.slider(
-                    "", 0.1, 20.0, ss.mm_z0, step=0.1
+                mm_z0 = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    key="mm_z0"
                 )
-                if z0 != ss.mm_z0:
-                    ss.mm_z0 = z0
+                if mm_z0 != ss.mm_z0:
+                    ss.mm_z0 = mm_z0
                     st.rerun()
 
-            # Tempo Máximo
+            # Tempo máximo
             with st.container(border=True):
-                st.markdown(f"Tempo Máximo = {ss.mm_tmax:.2f} s")
-                tmax = st.slider(
-                    "", 1.0, 400.0, float(ss.mm_tmax), step=1.0
+                st.markdown("Tempo final de simulação")
+                st.markdown(f"t_max = {ss.mm_tmax:.2f} s")
+                mm_tmax = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="mm_tmax"
                 )
-                if tmax != ss.mm_tmax:
-                    ss.mm_tmax = tmax
+                if mm_tmax != ss.mm_tmax:
+                    ss.mm_tmax = mm_tmax
                     st.rerun()
 
     # Linha divisória

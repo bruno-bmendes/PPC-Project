@@ -207,66 +207,86 @@ def circuito_rlc():
 
     with col2:
         col3, col4 = st.columns([1, 1])
+
         with col3:
             # Fonte
             with st.container(border=True):
+                st.markdown("Fonte de tensão")
                 st.markdown(f"E = {ss.rcl_e:.2f} V")
-                e = st.slider(
-                    "", 10.0, 500.0, ss.rcl_e, step=1.0
+                rcl_e = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="rcl_e"
                 )
-                if e != ss.rcl_e:
-                    ss.rcl_e = e
+                if rcl_e != ss.rcl_e:
+                    ss.rcl_e = rcl_e
                     st.rerun()
 
             # Resistor
             with st.container(border=True):
+                st.markdown("Resistência elétrica")
                 st.markdown(f"R = {ss.rcl_r:.2f} Ω")
-                r = st.slider(
-                    "", 1.0, 100.0, ss.rcl_r, step=1.0
+                rcl_r = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="rcl_r"
                 )
-                if r != ss.rcl_r:
-                    ss.rcl_r = r
+                if rcl_r != ss.rcl_r:
+                    ss.rcl_r = rcl_r
                     st.rerun()
 
+            # Termos auxiliares (somente leitura)
             with st.container(border=True):
+                st.markdown("Termos auxiliares")
                 st.markdown(f"R² = {ss.rcl_r**2:.2f} Ω²")
                 st.markdown(f"4L/C = {(4 * ss.rcl_l / ss.rcl_c):.2f} s²")
 
         with col4:
-            # Capacitor
+            # Capacitor (input em μF, salva em F)
             with st.container(border=True):
-                st.markdown(f"C = {(ss.rcl_c / 10e-6):.2f} * 10⁻⁶ F")
-                temp_c = ss.rcl_c / 10e-6
-                def change_c():
-                    ss.rcl_c = c * 10e-6
-                c = st.slider(
-                    "", 100.0, 50000.0, float(temp_c), step=10.0, on_change=change_c
+                st.markdown("Capacitância")
+                st.markdown(f"C = {(ss.rcl_c):.7f} F")
+                rcl_c_micro = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    step=1e-6,
+                    key="rcl_c"
                 )
-                if (c * 10e-6) != ss.rcl_c:
-                    ss.rcl_c = c * 10e-6
+                if rcl_c_micro != (ss.rcl_c):
+                    ss.rcl_c = rcl_c_micro
                     st.rerun()
 
-            # Indutor
+            # Indutor (input em mH, salva em H)
             with st.container(border=True):
-                st.markdown(f"L = {(ss.rcl_l / 10e-3):.2f} * 10⁻³ H")
-                temp_l = ss.rcl_l / 10e-3
-                def change_l():
-                    ss.rcl_l = l * 10e-3
-                l = st.slider(
-                    "", 10.0, 10000.0, float(temp_l), step=10.0, on_change=change_l
+                st.markdown("Indutância")
+                st.markdown(f"L = {(ss.rcl_l):.4f} H")
+                rcl_l_mili = st.number_input(
+                    "",
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    step=1e-3,
+                    key="rcl_l"
                 )
-                if (l * 10e-3) != ss.rcl_l:
-                    ss.rcl_l = l * 10e-3
+                if rcl_l_mili != (ss.rcl_l):
+                    ss.rcl_l = rcl_l_mili
                     st.rerun()
 
             # Tempo Máximo
             with st.container(border=True):
-                st.markdown(f"Tempo Máximo = {ss.rcl_tmax:.2f} s")
-                tmax = st.slider(
-                    "", 0.5, 400.0, float(ss.rcl_tmax), step=0.5
+                st.markdown("Tempo final de simulação")
+                st.markdown(f"t_max = {ss.rcl_tmax:.2f} s")
+                rcl_tmax = st.number_input(
+                    "",
+                    step=1.0,
+                    label_visibility="hidden",
+                    min_value=0.0,
+                    key="rcl_tmax"
                 )
-                if tmax != ss.rcl_tmax:
-                    ss.rcl_tmax = tmax
+                if rcl_tmax != ss.rcl_tmax:
+                    ss.rcl_tmax = rcl_tmax
                     st.rerun()
 
     # Linha divisória
