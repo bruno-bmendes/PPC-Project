@@ -15,6 +15,7 @@ from pages.sistema_massa_mola_amortecedor import *
 from pages.pendulo_simples_amortecido import *
 from pages.sistema_eletromecanico import *
 from pages.tanque_com_aquecimento import *
+from pages.motor_bomba_bcs import *
 
 # Configurações da página
 st.set_page_config(page_title="Simulador PPC", initial_sidebar_state="collapsed", layout="wide", page_icon="💡")
@@ -43,7 +44,7 @@ if "page" not in ss:
         ss.title = "Simulador PPC"
 
     if "page_set" not in ss:
-        ss.page_set = ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC", "Sistema Massa Mola Amortecedor", "Pêndulo Simples Amortecido", "Sistema Eletromecanico", "Tanque com Aquecimento"]
+        ss.page_set = ss.page_set = ["Início", "Vaso Pulmão", "Circuito RC", "Circuito RLC", "Sistema Massa Mola Amortecedor", "Pêndulo Simples Amortecido", "Sistema Eletromecanico", "Tanque com Aquecimento", "Motor Bomba de um Poço BCS"]
 
     ss.page = "inicio"
     st.rerun()
@@ -72,3 +73,6 @@ elif ss.page == "sistema_eletromecanico":
 
 elif ss.page == "tanque_com_aquecimento":
     tanque_com_aquecimento()
+
+elif ss.page == "motor_bomba_de_um_poco_bcs":
+    motor_bomba_de_um_poco_bcs()

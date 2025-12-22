@@ -665,4 +665,30 @@ fig.show()
 
 # COMMAND ----------
 
+from PIL import Image
+
+# Abrir imagem
+img = Image.open("images/motor_bomba_bcs.png")
+
+# Tamanho original
+width, height = img.size
+print(f"Tamanho original: {width}x{height}")
+
+# Fator de escala
+scale = 2  # dobra o tamanho
+
+# Novo tamanho
+new_size = (width * scale, height * scale)
+
+# Redimensionar com boa qualidade
+img_resized = img.resize(new_size, Image.Resampling.LANCZOS)
+
+# Salvar nova imagem
+img_resized.save("images/motor_bomba_bcs.png")
+
+print(f"Novo tamanho: {new_size[0]}x{new_size[1]}")
+
+
+# COMMAND ----------
+
 
